@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import { ForbiddenError } from '../errors/forbidden-error';
 
 interface UserPayload {
   id: string;
@@ -34,7 +35,7 @@ export const currentUser = (
 
     req.currentUser = payload;
   } catch (err) {
-    // we want to next() anyway so do nothing
+    throw new ForbiddenError();
   }
 
   next();
