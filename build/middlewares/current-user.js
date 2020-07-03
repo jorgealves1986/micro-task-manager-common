@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.currentUser = void 0;
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+var forbidden_error_1 = require("../errors/forbidden-error");
 exports.currentUser = function (req, res, next) {
     // (!req.session || !req.session.jwt) = (!req.session?.jwt)
     if (!req.headers.authorization) {
@@ -15,7 +16,7 @@ exports.currentUser = function (req, res, next) {
         req.currentUser = payload;
     }
     catch (err) {
-        // we want to next() anyway so do nothing
+        throw new forbidden_error_1.ForbiddenError();
     }
     next();
 };
