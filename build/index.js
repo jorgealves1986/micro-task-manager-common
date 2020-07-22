@@ -17,6 +17,7 @@ __exportStar(require("./errors/not-authorized-error"), exports);
 __exportStar(require("./errors/not-found-error"), exports);
 __exportStar(require("./errors/request-validation-error"), exports);
 __exportStar(require("./errors/forbidden-error"), exports);
+__exportStar(require("./errors/jwt-expired-error"), exports);
 __exportStar(require("./middlewares/current-user"), exports);
 __exportStar(require("./middlewares/error-handler"), exports);
 __exportStar(require("./middlewares/require-auth"), exports);

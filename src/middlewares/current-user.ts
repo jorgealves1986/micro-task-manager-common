@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { ForbiddenError } from '../errors/forbidden-error';
+import { JwtExpiredError } from '../errors/jwt-expired-error';
 
 interface UserPayload {
   id: string;
@@ -35,6 +36,9 @@ export const currentUser = (
 
     req.currentUser = payload;
   } catch (err) {
+    if (err.name === 'TokenExpiredError') {
+      throw new JwtExpiredError();
+    }
     throw new ForbiddenError();
   }
 

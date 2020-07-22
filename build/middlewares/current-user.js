@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.currentUser = void 0;
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var forbidden_error_1 = require("../errors/forbidden-error");
+var jwt_expired_error_1 = require("../errors/jwt-expired-error");
 exports.currentUser = function (req, res, next) {
     // (!req.session || !req.session.jwt) = (!req.session?.jwt)
     if (!req.headers.authorization) {
@@ -16,6 +17,9 @@ exports.currentUser = function (req, res, next) {
         req.currentUser = payload;
     }
     catch (err) {
+        if (err.name === 'TokenExpiredError') {
+            throw new jwt_expired_error_1.JwtExpiredError();
+        }
         throw new forbidden_error_1.ForbiddenError();
     }
     next();
